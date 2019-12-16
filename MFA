@@ -1,0 +1,46 @@
+How to Enable and Disable MFA using Windows Powershell.  	
+--------------------------------------------------------------------------------------------------------------------------------------
+
+Pre-Requisites: 
+Authentication Administrators AD Role  
+Windows Powershell - Run As Admin 
+Powershell MSOnline Module 
+Connect to JJINS Azure AD 
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+Install MSOnline Module
+
+Open Powershell:  
+Copy and Paste->  Install-Module MSOnline 
+Type "A" 
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+Connect:  
+Copy and Paste->  Connect-MsolService
+You will recieve our organizations prompts. Perform.  This confirms you have connected to our Azure domain safely.   
+	
+--------------------------------------------------------------------------------------------------------------------------------------
+	
+ENABLE MFA FOR SPECIFIC USER:  Replace "INPUT USER JJ EMAIL HERE" Remove the parenthesese. Then, COPY PASTE ENTIRE SCRIPT.    
+	
+Import-Module MSOnline
+$st = New-Object -TypeName Microsoft.Online.Administration.StrongAuthenticationRequirement
+$st.RelyingParty = "*"
+$st.State = "Enabled"
+$sta = @($st)
+Set-MsolUser -UserPrincipalName (INPUT USER JJ EMAIL HERE) -StrongAuthenticationRequirements $sta
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+
+DISABLE MFA FOR SPECIFIC USER: 
+
+Set-MsolUser -UserPrincipalName (INPUT USER JJ EMAIL HERE) -StrongAuthenticationRequirements @()
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+CLOSE POWERSHELL 
